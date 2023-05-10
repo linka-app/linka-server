@@ -13,6 +13,19 @@ return new class extends Migration
     {
         Schema::create('bookmarks', function (Blueprint $table) {
             $table->id();
+            $table->text('url')->nullable();
+            $table->text('title');
+            $table->text('description')->nullable();
+            $table->string('website_title', 255)->nullable();
+            $table->text('website_description')->nullable();
+            $table->boolean('unread')->default(false);
+            $table->boolean('archived')->default(false);
+            $table->boolean('shared')->default(false);
+            $table->timestamp('accessed_at')->nullable();
+            $table->text('web_archive_snapshot_url')->nullable();
+            $table->string('favicon_file', 255)->nullable();
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

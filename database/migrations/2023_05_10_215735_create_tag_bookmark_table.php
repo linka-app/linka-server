@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bookmark_tag', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-        
+        Schema::create('tag_bookmark', function (Blueprint $table) {
+            $table->unsignedBigInteger('bookmark_id')->index();
+            $table->foreign('bookmark_id')->references('id')->on('bookmarks')->onDelete('cascade');
 
+            $table->unsignedBigInteger('tag_id')->index();
+            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
+            $table->primary(['tag_id', 'bookmark_id']);
+
+        });
     }
 
     /**
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bookmark_tag');
+        Schema::dropIfExists('tag_bookmark');
     }
 };
