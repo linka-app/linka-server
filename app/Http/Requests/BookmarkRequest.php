@@ -2,21 +2,29 @@
 
     namespace App\Http\Requests;
 
+    use App\Models\Bookmark;
     use Illuminate\Foundation\Http\FormRequest;
 
     class BookmarkRequest extends FormRequest
     {
+
+        /**
+         * Prepare the data for validation.
+         */
+        protected function prepareForValidation(): void
+        {
+            $this->merge([
+                             'url' => filter_var($this->url, FILTER_VALIDATE_URL) ? $this->url : "https://$this->url",
+                         ]);
+        }
+
         public function rules(): array
         {
-            return [
-                'url'         => 'url|required|unique:bookmarks',
-                'title'       => 'required|string|max:255',
-                'description' => 'string',
-                'unread'      => 'boolean',
-                'archived'    => 'boolean',
-                'shared'      => 'boolean',
-                'tags'        => 'sometimes|array:name',
-                'tags.name'   => 'sometimes|required|string|max:64',
-            ];
+            return array_merge(
+                [
+                    'tags' => 'array'
+                ],
+                Bookmark::rules($this->request->get('link')),
+            );
         }
     }

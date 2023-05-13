@@ -54,7 +54,7 @@
 
         public function tags(): \Illuminate\Database\Eloquent\Relations\HasMany
         {
-            return $this->hasMany(Tag::class);
+            return $this->hasMany(Group::class);
         }
 
     }
