@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a8739c7a945901821a2c996837432b37",
+    "content-hash": "aa1aa8e9f7685b0225fb95db3d921589",
     "packages": [
         {
             "name": "brick/math",
@@ -1048,6 +1048,69 @@
                 }
             ],
             "time": "2023-01-17T01:02:51+00:00"
+        },
+        {
+            "name": "kennedy-osaze/laravel-api-response",
+            "version": "v2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kennedy-osaze/laravel-api-response.git",
+                "reference": "017eb5864160ce311173647a8aab12ddf9e81f32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kennedy-osaze/laravel-api-response/zipball/017eb5864160ce311173647a8aab12ddf9e81f32",
+                "reference": "017eb5864160ce311173647a8aab12ddf9e81f32",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^10.0",
+                "illuminate/translation": "^10.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "kennedy-osaze/php-cs-fixer-config": "^2.0.1",
+                "nunomaduro/collision": "^7.0",
+                "orchestra/testbench": "^8.0",
+                "phpunit/phpunit": "^10.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "KennedyOsaze\\LaravelApiResponse\\LaravelApiResponseServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KennedyOsaze\\LaravelApiResponse\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kennedy Osaze",
+                    "email": "me.osaze@gmail.com",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Renders consistent HTTP JSON responses for API-based projects",
+            "homepage": "https://github.com/kennedy-osaze/laravel-api-response",
+            "keywords": [
+                "api",
+                "json",
+                "laravel",
+                "response"
+            ],
+            "support": {
+                "issues": "https://github.com/kennedy-osaze/laravel-api-response/issues",
+                "source": "https://github.com/kennedy-osaze/laravel-api-response/tree/v2.0"
+            },
+            "time": "2023-03-19T23:37:51+00:00"
         },
         {
             "name": "laravel/framework",
@@ -6701,6 +6764,71 @@
                 }
             ],
             "time": "2023-04-19T08:48:22+00:00"
+        },
+        {
+            "name": "pestphp/pest-plugin-faker",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pestphp/pest-plugin-faker.git",
+                "reference": "39fa2bd69d95024783ccf40ff48e3680aea1ba4a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pestphp/pest-plugin-faker/zipball/39fa2bd69d95024783ccf40ff48e3680aea1ba4a",
+                "reference": "39fa2bd69d95024783ccf40ff48e3680aea1ba4a",
+                "shasum": ""
+            },
+            "require": {
+                "fakerphp/faker": "^1.21.0",
+                "pestphp/pest": "^2.0.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "pestphp/pest-dev-tools": "^2.5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Faker.php"
+                ],
+                "psr-4": {
+                    "Pest\\Faker\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "The Pest Faker Plugin",
+            "keywords": [
+                "faker",
+                "framework",
+                "pest",
+                "php",
+                "plugin",
+                "test",
+                "testing",
+                "unit"
+            ],
+            "support": {
+                "source": "https://github.com/pestphp/pest-plugin-faker/tree/v2.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=66BYDWAT92N6L",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/nunomaduro",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/nunomaduro",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2023-03-20T10:06:05+00:00"
         },
         {
             "name": "pestphp/pest-plugin-laravel",

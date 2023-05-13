@@ -24,6 +24,7 @@
                 ])->default('_blank');
                 $table->boolean('enable_sharing')->default(FALSE);
                 $table->boolean('enable_favicons')->default(TRUE);
+                $table->boolean('slugify tags')->default(TRUE);
                 $table->timestamps();
             });
         }

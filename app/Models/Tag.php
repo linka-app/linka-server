@@ -10,7 +10,8 @@
         use HasFactory;
 
         protected $fillable = [
-            'name'
+            'name',
+            'user_id'
         ];
 
         public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo

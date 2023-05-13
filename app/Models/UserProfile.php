@@ -14,11 +14,13 @@
             'bookmark_link_target',
             'enable_sharing',
             'enable_favicons',
+            'slugify_tags',
         ];
 
         protected $casts = [
             'enable_sharing'  => 'boolean',
             'enable_favicons' => 'boolean',
+            'slugify_tags'    => 'boolean',
         ];
 
         public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
