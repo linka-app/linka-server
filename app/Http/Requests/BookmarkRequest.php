@@ -24,7 +24,7 @@
                 [
                     'tags' => 'array'
                 ],
-                Bookmark::rules($this->request->get('link')),
+                Bookmark::rules($this->request->get('url')),
             );
         }
     }

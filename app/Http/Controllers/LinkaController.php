@@ -9,7 +9,7 @@
     use Illuminate\Http\Request;
     use Inertia\Inertia;
 
-    class BookmarkController extends Controller
+    class LinkaController extends Controller
     {
         public function index(Request $request, array $filteredTags = [])
         {
@@ -47,8 +47,6 @@
 
             //$this->authorize('create', Bookmark::class);
             (new BookmarkService())->store($request);
-
-            return to_route('dashboard');
         }
 
         public function show(Bookmark $bookmark)

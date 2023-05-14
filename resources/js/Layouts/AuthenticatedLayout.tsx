@@ -1,128 +1,165 @@
-import { useState, PropsWithChildren, ReactNode } from 'react';
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
-import { User } from '@/types';
+import React, {
+    lazy,
+    PropsWithChildren,
+    ReactNode,
+    Suspense,
+    useEffect,
+    useState,
+} from "react";
+import { useContexts } from "@/Hooks/useContexts";
+import AddCircleSharpIcon from "@mui/icons-material/AddCircleSharp";
+import SettingsSharpIcon from "@mui/icons-material/SettingsSharp";
+import {
+    AppBar,
+    Avatar,
+    Box,
+    Container,
+    Divider,
+    Drawer,
+    Grid,
+    IconButton,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    Stack,
+    Toolbar,
+} from "@mui/material";
+import LinkaLogo from "@/Images/logo192.png";
+import { Credits } from "@/Components/Credits";
+import { LinkaContextProvider } from "@/Contexts/LinkaContext";
+import { AddBookmarkSkeleton } from "@/Components/AddBookmark";
+import { Link, router } from "@inertiajs/react";
+import MenuIcon from "@mui/icons-material/Menu";
+import CircularProgress from "@mui/material/CircularProgress";
 
-export default function Authenticated({ user, header, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
-    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+const AddBookmark = lazy(() => import("@/Components/AddBookmark/AddBookmark"));
+
+const InnerComponent: React.FC<{
+    version: string;
+    children: ReactNode;
+}> = (props) => {
+    const { doDrawer, doDrawerClose, getDrawerState } = useContexts();
+
+    const [isDrawer, setIsDrawer] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleOpenMenu = () => {
+        setIsDrawer(true);
+    };
+    const handleCloseMenu = () => {
+        setIsDrawer(false);
+    };
+
+    useEffect(() => {
+        router.on("start", (event) => {
+            setIsLoading(true);
+        });
+        router.on("finish", (event) => {
+            setIsLoading(false);
+        });
+    }, []);
+
+    const handleAddBookmark = () => {
+        doDrawer({
+            open: true,
+            children: (
+                <Suspense fallback={<AddBookmarkSkeleton />}>
+                    <AddBookmark />
+                </Suspense>
+            ),
+        });
+    };
+
+    const handleViewSettings = () => {
+        doDrawer({
+            open: true,
+            children: <Suspense fallback={""}>SETTINGS</Suspense>,
+        });
+    };
 
     return (
-        <div className="min-h-screen bg-gray-100">
-            <nav className="bg-white border-b border-gray-100">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16">
-                        <div className="flex">
-                            <div className="shrink-0 flex items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
-                                </Link>
-                            </div>
-
-                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
-                                </NavLink>
-                            </div>
-                        </div>
-
-                        <div className="hidden sm:flex sm:items-center sm:ml-6">
-                            <div className="ml-3 relative">
-                                <Dropdown>
-                                    <Dropdown.Trigger>
-                                        <span className="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-                                            >
-                                                {user.name}
-
-                                                <svg
-                                                    className="ml-2 -mr-0.5 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </Dropdown.Trigger>
-
-                                    <Dropdown.Content>
-                                        <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
-                                        <Dropdown.Link href={route('logout')} method="post" as="button">
-                                            Log Out
-                                        </Dropdown.Link>
-                                    </Dropdown.Content>
-                                </Dropdown>
-                            </div>
-                        </div>
-
-                        <div className="-mr-2 flex items-center sm:hidden">
-                            <button
-                                onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
-                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+        <>
+            <Drawer
+                anchor={"left"}
+                open={isDrawer}
+                onClick={handleCloseMenu}
+                onKeyDown={handleCloseMenu}
+            >
+                <Box sx={{ width: 250 }} mt={"75px"} role="presentation">
+                    <List>
+                        <ListItem disablePadding>
+                            <ListItemButton
+                                component={Link}
+                                href={route("bookmark.add")}
                             >
-                                <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                    <path
-                                        className={!showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        className={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                                <ListItemIcon>
+                                    <AddCircleSharpIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={"Add Bookmark"} />
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+                    <Divider />
+                    <List>
+                        <ListItem disablePadding>
+                            <ListItemButton
+                                component={Link}
+                                href={route("bookmark.add")}
+                            >
+                                <ListItemIcon>
+                                    <SettingsSharpIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={"Settings"} />
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+                </Box>
+            </Drawer>
+            <AppBar
+                position="fixed"
+                sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            >
+                <Toolbar>
+                    <IconButton
+                        size="large"
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        sx={{ mr: 2 }}
+                        onClick={handleOpenMenu}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Avatar src={LinkaLogo} alt="linka!" />
+                    <Box sx={{ flexGrow: 1 }}></Box>
+                    <Box sx={{ display: "flex" }}>
+                        {isLoading && <CircularProgress />}
+                    </Box>
+                </Toolbar>
+            </AppBar>
+            <Container fixed>
+                <Box mt={"75px"} mb={2}>
+                    <Grid container>{props.children}</Grid>
+                    <Stack
+                        mb={2}
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        <Credits version={"1.0"} />
+                    </Stack>
+                </Box>
+            </Container>
+        </>
+    );
+};
 
-                <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
-                    <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Dashboard
-                        </ResponsiveNavLink>
-                    </div>
-
-                    <div className="pt-4 pb-1 border-t border-gray-200">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">
-                                {user.name}
-                            </div>
-                            <div className="font-medium text-sm text-gray-500">{user.email}</div>
-                        </div>
-
-                        <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
-                            <ResponsiveNavLink method="post" href={route('logout')} as="button">
-                                Log Out
-                            </ResponsiveNavLink>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-
-            {header && (
-                <header className="bg-white shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
-                </header>
-            )}
-
-            <main>{children}</main>
-        </div>
+export default function Authenticated({ children }: PropsWithChildren<{}>) {
+    return (
+        <LinkaContextProvider>
+            <InnerComponent version={"1.00"}>{children}</InnerComponent>
+        </LinkaContextProvider>
     );
 }

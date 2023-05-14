@@ -13,11 +13,12 @@
 
         public function viewAny(User $user): bool
         {
-
+            return TRUE;
         }
 
         public function view(User $user, Bookmark $bookmark): bool
         {
+            return TRUE;
         }
 
         public function create(User $user): bool

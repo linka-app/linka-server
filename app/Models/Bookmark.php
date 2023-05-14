@@ -6,10 +6,12 @@
     use Illuminate\Database\Eloquent\Model;
     use Illuminate\Database\Query\Builder;
     use Illuminate\Validation\Rule;
+    use Laravel\Scout\Searchable;
     use Spatie\Tags\HasTags;
 
     class Bookmark extends Model
     {
+        use Searchable;
         use HasTags;
         use HasFactory;
 
@@ -36,7 +38,7 @@
                     'required',
                     $link !== $linkFromRequest ? Rule::unique(Bookmark::class, 'url')->where(fn(Builder $query) => $query->where('user_id', \Auth::id())) : '',
                 ],
-                'title'       => 'string|min:2|min:255|nullable',
+                'title'       => 'string|min:2|max:255|nullable',
                 'description' => 'string|nullable',
                 'unread'      => 'boolean|nullable',
                 'archived'    => 'boolean|nullable',
