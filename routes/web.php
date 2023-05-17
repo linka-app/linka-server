@@ -3,6 +3,7 @@
     use App\Http\Controllers\BookmarkController;
     use App\Http\Controllers\LinkaController;
     use App\Http\Controllers\ProfileController;
+    use App\Http\Controllers\UserProfileController;
     use Illuminate\Foundation\Application;
     use Illuminate\Support\Facades\Route;
     use Inertia\Inertia;
@@ -28,17 +29,8 @@
     });
 
     Route::middleware('auth', 'verified')->group(function () {
-
-
-        Route::get('/bookmark/add', function () {
-            return Inertia::render('Bookmark/Add');
-        })->name('bookmark.add');
-
-        Route::apiResource('bookmark', BookmarkController::class)->except([
-                                                                              'create',
-                                                                              'edit',
-                                                                          ]);
-
+        Route::Resource('bookmark', BookmarkController::class);
+        Route::Resource('user-profile', UserProfileController::class)->only('store');
     });
 
     Route::get('/dashboard', [

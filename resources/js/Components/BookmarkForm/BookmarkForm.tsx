@@ -15,6 +15,7 @@ export const BookmarkForm: React.FC<{
     actions: ReactNode;
 }> = (props) => {
     const { tags } = usePage().props;
+    console.log(usePage().props);
 
     const { watch } = useFormContext();
     const resultViewMode = watch("url");

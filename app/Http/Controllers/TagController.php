@@ -97,13 +97,15 @@
          */
         public static function getAllTags()
         {
-            return Tag::orderBy('name')
+            $theTags = Tag::orderBy('name')
                 //->filterByCurrentUser()
-                      ->get()
-                      ->transform(fn(Tag $tag) => [
-                          'id'   => $tag->id,
-                          'name' => $tag->name,
-                      ]);
+                          ->get()
+                          ->transform(fn(Tag $tag) => [
+                              'id'    => $tag->id,
+                              'label' => $tag->name,
+                          ]);
+
+            return empty($theTags) ? [] : $theTags;
         }
 
         /**

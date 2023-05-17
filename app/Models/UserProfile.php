@@ -12,15 +12,11 @@
         protected $fillable = [
             'bookmark_date_display',
             'bookmark_link_target',
-            'enable_sharing',
-            'enable_favicons',
-            'slugify_tags',
+            'dark_mode',
         ];
 
         protected $casts = [
-            'enable_sharing'  => 'boolean',
-            'enable_favicons' => 'boolean',
-            'slugify_tags'    => 'boolean',
+            'dark_mode' => 'boolean',
         ];
 
         public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo

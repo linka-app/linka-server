@@ -22,9 +22,7 @@
                     '_blank',
                     '_self'
                 ])->default('_blank');
-                $table->boolean('enable_sharing')->default(FALSE);
-                $table->boolean('enable_favicons')->default(TRUE);
-                $table->boolean('slugify tags')->default(TRUE);
+                $table->boolean('dark_mode')->default(FALSE);
                 $table->timestamps();
             });
         }

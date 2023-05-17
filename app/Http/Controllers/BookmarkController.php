@@ -42,6 +42,22 @@
         /**
          * Store a newly created resource in storage.
          */
+        public function create()
+        {
+
+            //$this->authorize('create', Bookmark::class);
+            return Inertia::render('Bookmark/Add', [
+                'config' => [
+                    'language' => 'en'
+                ],
+                'tags'   => TagController::getAllTags(),
+            ]);
+
+        }
+
+        /**
+         * Store a newly created resource in storage.
+         */
         public function store(BookmarkRequest $request)
         {
 

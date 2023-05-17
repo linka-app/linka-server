@@ -92,7 +92,7 @@ const InnerComponent: React.FC<{
                         <ListItem disablePadding>
                             <ListItemButton
                                 component={Link}
-                                href={route("bookmark.add")}
+                                href={route("bookmark.create")}
                             >
                                 <ListItemIcon>
                                     <AddCircleSharpIcon />
@@ -106,7 +106,7 @@ const InnerComponent: React.FC<{
                         <ListItem disablePadding>
                             <ListItemButton
                                 component={Link}
-                                href={route("bookmark.add")}
+                                href={route("profile.edit")}
                             >
                                 <ListItemIcon>
                                     <SettingsSharpIcon />
