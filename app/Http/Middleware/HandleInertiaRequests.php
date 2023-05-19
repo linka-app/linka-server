@@ -33,7 +33,7 @@
             return array_merge(parent::share($request), [
                 'auth'  => [
                     'user'    => $request->user(),
-                    'profile' => $request->user()->profile(),
+                    'profile' => $request->user()->profile,
                 ],
                 'ziggy' => function () use ($request) {
                     return array_merge((new Ziggy)->toArray(), [

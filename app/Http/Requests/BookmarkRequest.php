@@ -3,9 +3,8 @@
     namespace App\Http\Requests;
 
     use App\Models\Bookmark;
-    use Illuminate\Foundation\Http\FormRequest;
 
-    class BookmarkRequest extends FormRequest
+    class BookmarkRequest extends BaseFormRequest
     {
 
         /**
@@ -18,7 +17,7 @@
                          ]);
         }
 
-        public function rules(): array
+        public function store(): array
         {
             return array_merge(
                 [
@@ -26,5 +25,18 @@
                 ],
                 Bookmark::rules($this->request->get('url')),
             );
+        }
+
+        public function update(): array
+        {
+            return
+                [
+                    ...Bookmark::rules($this->request->get('url')),
+                    'tags' => 'array',
+                    'url'  => [
+                        'url',
+                        'required'
+                    ]
+                ];
         }
     }

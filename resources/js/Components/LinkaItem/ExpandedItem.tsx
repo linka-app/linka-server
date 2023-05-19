@@ -1,13 +1,6 @@
-import { shortenURL } from '@/utils/shortenURL/shortenURL';
+import {shortenURL} from '@/Utils/shortenURL/shortenURL';
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
-import {
-  Grid,
-  ListItemAvatar,
-  ListItemButton,
-  ListItemText,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
+import {Grid, ListItemAvatar, ListItemButton, ListItemText, Typography, useMediaQuery,} from '@mui/material';
 import moment from 'moment';
 import React from 'react';
 import LinkaItemProps from './LinkaItemProps';
@@ -75,7 +68,6 @@ export const ExpandedItem: React.FC<LinkaItemProps> = (props) => {
         </Grid>
         <Grid item xs={11}>
           <ListItemText
-            pt={0}
             disableTypography
             secondary={<Typography variant="caption">{theTime}</Typography>}
           />

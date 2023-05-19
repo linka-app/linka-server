@@ -1,13 +1,13 @@
-import { browserlessDoScrape } from '@/api/browserless';
-import { doDescArticle } from '@/api/openai';
-import { useContexts } from '@/hooks';
-import { I18nLocals, i18n } from '@/i18n';
-import { getConfig } from '@/utils/getConfig/getConfig';
+import {browserlessDoScrape} from '@/api/browserless';
+import {doDescArticle} from '@/api/openai';
+import {useContexts} from '@/hooks';
+import {i18n, I18nLocals} from '@/i18n';
+import {getConfig} from '@/Utils/getConfig/getConfig';
 import PsychologySharpIcon from '@mui/icons-material/PsychologySharp';
-import { LoadingButton } from '@mui/lab';
+import {LoadingButton} from '@mui/lab';
 import _ from 'lodash';
-import React, { useState } from 'react';
-import { useFormContext } from 'react-hook-form-mui'; // instead of react-hook-form
+import React, {useState} from 'react';
+import {useFormContext} from 'react-hook-form-mui'; // instead of react-hook-form
 
 export const BookmarkFormFillButton: React.FC = () => {
   const config = getConfig();

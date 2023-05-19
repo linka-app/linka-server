@@ -98,12 +98,8 @@
         public static function getAllTags()
         {
             $theTags = Tag::orderBy('name')
-                //->filterByCurrentUser()
                           ->get()
-                          ->transform(fn(Tag $tag) => [
-                              'id'    => $tag->id,
-                              'label' => $tag->name,
-                          ]);
+                          ->pluck('name')->all();
 
             return empty($theTags) ? [] : $theTags;
         }

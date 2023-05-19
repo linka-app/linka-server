@@ -18,9 +18,7 @@
                 'unread'      => $this->unread,
                 'archived'    => $this->archived,
                 'shared'      => $this->shared,
-                'tags'        => TagResource::collection($this->tags),
-                'created_at'  => $this->created_at,
-                'updated_at'  => $this->updated_at,
+                'tags'        => $this->tags->pluck('name')->all()
             ];
         }
     }

@@ -22,7 +22,12 @@
                     '_blank',
                     '_self'
                 ])->default('_blank');
+                $table->enum('bookmark_view', [
+                    'condensed',
+                    'expanded'
+                ])->default('condensed');
                 $table->boolean('dark_mode')->default(FALSE);
+                $table->string('language', 5)->default('en');
                 $table->timestamps();
             });
         }

@@ -11,7 +11,7 @@
         public function store(UserProfileRequest $request)
         {
 
-            $profile = $request->user()->profile()->firstorNew();
+            $profile = $request->user()->profile()->firstorNew(['user_id' => $request->user()->id]);
             $profile->fill($request->validated());
             $profile->save();
 

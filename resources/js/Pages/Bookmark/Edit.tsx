@@ -1,22 +1,19 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import {Head, useForm} from "@inertiajs/react";
+import {Head, useForm, usePage} from "@inertiajs/react";
 import {Button, Grid} from "@mui/material";
 import React, {FormEventHandler} from "react";
 import {BookmarkForm} from "@/Pages/Bookmark/Partials/BookmarkForm";
 
 const Add: React.FC = () => {
+    const bookmark = usePage().props.bookmark as any;
 
-    const { data, setData, post, errors, processing, recentlySuccessful } =
-        useForm({
-            unread: false,
-            archived: false,
-            shared: false,
-        });
+    const { data, setData, put, errors, processing, recentlySuccessful } =
+        useForm(bookmark);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route("bookmark.store"),{
+        put(route("bookmark.update", bookmark.id),{
             preserveScroll: true}
         );
     };
@@ -24,6 +21,7 @@ const Add: React.FC = () => {
     return (
         <AuthenticatedLayout>
             <Head title="Add Bookmark" />
+
             <Grid
                 container
                 spacing={2}
@@ -42,6 +40,7 @@ const Add: React.FC = () => {
                     </Button>
                 </Grid>
             </Grid>
+
         </AuthenticatedLayout>
     );
 };

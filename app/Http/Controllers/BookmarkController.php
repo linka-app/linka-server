@@ -8,6 +8,7 @@
     use App\Services\BookmarkService;
     use Illuminate\Http\Request;
     use Inertia\Inertia;
+    use Redirect;
 
     class BookmarkController extends Controller
     {
@@ -69,18 +70,21 @@
 
         public function show(Bookmark $bookmark)
         {
-            //  $this->authorize('view', $bookmark);
-
-            return new BookmarkResource($bookmark);
+            return Inertia::render('Bookmark/Edit', [
+                'bookmark' => new BookmarkResource($bookmark),
+                'tags'     => TagController::getAllTags(),
+            ]);
         }
 
         public function update(BookmarkRequest $request, Bookmark $bookmark)
         {
-            $this->authorize('update', $bookmark);
 
-            $bookmark->update($request->validated());
+            $validated = $request->validated();
+            $bookmark->update($validated);
 
-            return new BookmarkResource($bookmark);
+            $bookmark->syncTags($validated['tags']);
+
+            return Redirect::route('dashboard');
         }
 
         public function destroy(Bookmark $bookmark)

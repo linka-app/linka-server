@@ -1,12 +1,5 @@
-import React, {
-    lazy,
-    PropsWithChildren,
-    ReactNode,
-    Suspense,
-    useEffect,
-    useState,
-} from "react";
-import { useContexts } from "@/Hooks/useContexts";
+import React, {PropsWithChildren, ReactNode, useEffect, useState,} from "react";
+import {useContexts} from "@/Hooks/useContexts";
 import AddCircleSharpIcon from "@mui/icons-material/AddCircleSharp";
 import SettingsSharpIcon from "@mui/icons-material/SettingsSharp";
 import {
@@ -27,14 +20,13 @@ import {
     Toolbar,
 } from "@mui/material";
 import LinkaLogo from "@/Images/logo192.png";
-import { Credits } from "@/Components/Credits";
-import { LinkaContextProvider } from "@/Contexts/LinkaContext";
-import { AddBookmarkSkeleton } from "@/Components/AddBookmark";
-import { Link, router } from "@inertiajs/react";
+import {Credits} from "@/Components/Credits";
+import {LinkaContextProvider} from "@/Contexts/LinkaContext";
+import {Link, router} from "@inertiajs/react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CircularProgress from "@mui/material/CircularProgress";
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 
-const AddBookmark = lazy(() => import("@/Components/AddBookmark/AddBookmark"));
 
 const InnerComponent: React.FC<{
     version: string;
@@ -61,24 +53,6 @@ const InnerComponent: React.FC<{
         });
     }, []);
 
-    const handleAddBookmark = () => {
-        doDrawer({
-            open: true,
-            children: (
-                <Suspense fallback={<AddBookmarkSkeleton />}>
-                    <AddBookmark />
-                </Suspense>
-            ),
-        });
-    };
-
-    const handleViewSettings = () => {
-        doDrawer({
-            open: true,
-            children: <Suspense fallback={""}>SETTINGS</Suspense>,
-        });
-    };
-
     return (
         <>
             <Drawer
@@ -90,6 +64,16 @@ const InnerComponent: React.FC<{
                 <Box sx={{ width: 250 }} mt={"75px"} role="presentation">
                     <List>
                         <ListItem disablePadding>
+                            <ListItemButton
+                                component={Link}
+                                href={route("dashboard")}
+                            >
+                                <ListItemIcon>
+                                    <FormatListBulletedIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={"View Bookmarks"} />
+                            </ListItemButton>
+                        </ListItem><ListItem disablePadding>
                             <ListItemButton
                                 component={Link}
                                 href={route("bookmark.create")}

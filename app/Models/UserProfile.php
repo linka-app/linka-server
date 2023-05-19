@@ -10,9 +10,11 @@
         use HasFactory;
 
         protected $fillable = [
+            'language',
             'bookmark_date_display',
             'bookmark_link_target',
             'dark_mode',
+            'bookmark_view',
         ];
 
         protected $casts = [
