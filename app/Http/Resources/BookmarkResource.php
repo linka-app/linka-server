@@ -18,7 +18,8 @@
                 'unread'      => $this->unread,
                 'archived'    => $this->archived,
                 'shared'      => $this->shared,
-                'tags'        => $this->tags->pluck('name')->all()
+                'tags'        => $this->tags()->where('type', 'tag')->pluck('name')->all(),
+                'groups'      => $this->tags()->where('type', 'group')->pluck('name')->all()
             ];
         }
     }

@@ -22,6 +22,7 @@
             'unread',
             'archived',
             'shared',
+            'user_id',
         ];
 
         protected $casts = [

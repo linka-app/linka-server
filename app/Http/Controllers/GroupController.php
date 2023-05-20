@@ -8,14 +8,8 @@
     use Inertia\Response;
     use Spatie\Tags\Tag;
 
-    class TagController extends Controller
+    class GroupController extends Controller
     {
-        protected function rules(): array
-        {
-            return [
-                'tagName' => 'required|min:2|string',
-            ];
-        }
 
         /**
          * Display a listing of the resource.
@@ -95,9 +89,9 @@
         /**
          * Returns all tags for the current user.
          */
-        public static function getAllTags()
+        public static function getAllGroups()
         {
-            $theTags = Tag::getWithType('tag')
+            $theTags = Tag::getWithType('group')
                           ->pluck('name')->all();
 
             return empty($theTags) ? [] : $theTags;

@@ -19,12 +19,12 @@
 
         public function store(): array
         {
-            return array_merge(
+            return
                 [
-                    'tags' => 'array'
-                ],
-                Bookmark::rules($this->request->get('url')),
-            );
+                    ...Bookmark::rules($this->request->get('url')),
+                    'tags'   => 'array',
+                    'groups' => 'array',
+                ];
         }
 
         public function update(): array
@@ -32,8 +32,9 @@
             return
                 [
                     ...Bookmark::rules($this->request->get('url')),
-                    'tags' => 'array',
-                    'url'  => [
+                    'tags'   => 'array',
+                    'groups' => 'array',
+                    'url'    => [
                         'url',
                         'required'
                     ]

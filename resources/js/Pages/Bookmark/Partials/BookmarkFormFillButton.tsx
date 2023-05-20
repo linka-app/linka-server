@@ -1,35 +1,38 @@
 import React from "react";
-import {Grid, TextField,} from "@mui/material";
+import {Grid,} from "@mui/material";
 // @ts-ignore
 import {InertiaFormProps} from "@inertiajs/react/types/useForm";
 import _ from "lodash";
-import {router, usePage} from "@inertiajs/react";
+import {usePage} from "@inertiajs/react";
 import {i18n, I18nLocals} from "@/i18n";
 import LoadingButton from "@mui/lab/LoadingButton";
 import PsychologySharpIcon from "@mui/icons-material/PsychologySharp";
 
-
 export const BookmarkFormFillButton: React.FC<{
     errors?: InertiaFormProps['errors'];
-    setData: InertiaFormProps['setData'];
-    data: InertiaFormProps['data'];
+    setData: any;
+    data: any;
 }> = (props) => {
-    const profile = usePage().props.auth.user.profile as any;
+    const profile = _.get(usePage(), 'props.auth.user.profile') as any;
     const translation = i18n[(profile?.language as I18nLocals) || 'en'];
 
-    //const [search, setSearch] = React.useState("");
+    const [loading, setLoading] = React.useState(false);
 
     const doFill = async () => {
-        router.post(route("bookmark.index"), { search: props.data.url }, {
-            preserveState: true,
-            onProgress: () => {
-                props.setData("title", "test");
-                props.setData("description", "test");
-                props.setData("tags", "test");
-            },
-            only: ['fillform']
+
+        const theResult = await window.axios.post(route("bookmark.fill"),{
+            url: props.data.url
+        }).then(res => {
+                return res.data
         });
-        return ;
+
+        const newData = {
+            title: _.get(theResult, 'title'),
+            description: _.get(theResult, 'desc'),
+            tags: _.get(theResult, 'tags'),
+        }
+
+        props.setData({ ...props.data, ...newData });
     };
 
     return (
@@ -41,24 +44,10 @@ export const BookmarkFormFillButton: React.FC<{
                     variant="outlined"
                     onClick={doFill}
                     fullWidth
+                    type={'button'}
                 >
                     {translation.bookmarkFormFillButtonFillWithChatGPT}
                 </LoadingButton>
-
-                BookmarkFormFillButton
-            </Grid>
-            <Grid xs={12} item>
-                <TextField
-                    error={!_.isNil(props.errors.url)}
-                    label="Url"
-                    defaultValue={props.data.url}
-                    onChange={(e) =>
-                        props.setData("url", e.target.value)
-                    }
-                    helperText={props.errors.url}
-                    fullWidth
-                    autoComplete={"off"}
-                />
             </Grid>
         </>
     );

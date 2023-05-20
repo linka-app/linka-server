@@ -1,11 +1,11 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
-import React, { Suspense } from "react";
-import { Box, Grid, List, Stack } from "@mui/material";
-import { LinkaItem } from "@/Components/LinkaItem";
+import {Head} from "@inertiajs/react";
+import React, {Suspense, useState} from "react";
+import {Box, Grid, List, Stack, TextField} from "@mui/material";
+import {LinkaItem} from "@/Components/LinkaItem";
 import LinkaItemSkeleton from "@/Components/LinkaItem/LinkaItemSkeleton";
-import { i18n, I18nLocals } from "@/i18n";
-import { BookmarkItem } from "@/types";
+import {i18n, I18nLocals} from "@/i18n";
+import {BookmarkItem} from "@/types";
 
 interface PageProps {
     config: any;
@@ -21,6 +21,8 @@ function SearchMenu() {
 export default function Linka({ config, auth, links }: PageProps) {
     const translation = i18n[(config?.language as I18nLocals) || "en"];
 
+    const [searchTerm, setSearchTerm] = useState("");
+
     return (
         <AuthenticatedLayout>
             <Head title="Dashboard" />
@@ -30,8 +32,15 @@ export default function Linka({ config, auth, links }: PageProps) {
                     <Grid container spacing={2}>
                         <Grid xs={12}>
                             <Stack direction={"row"} spacing={1}>
-                                SEARCH HERE
-                                <SearchMenu />
+                                <TextField
+                                    label="Search"
+                                    value={searchTerm}
+                                    onChange={(e) =>
+                                        setSearchTerm(e.target.value)
+                                    }
+                                    fullWidth
+                                    autoComplete={"off"}
+                                />
                             </Stack>
                         </Grid>
                         <Grid xs={12}>

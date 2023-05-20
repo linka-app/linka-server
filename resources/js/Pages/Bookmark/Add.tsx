@@ -11,6 +11,9 @@ const Add: React.FC = () => {
             unread: false,
             archived: false,
             shared: false,
+            title: "",
+            url: "",
+            tags: []
         });
 
     const submit: FormEventHandler = (e) => {

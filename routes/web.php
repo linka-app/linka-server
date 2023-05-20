@@ -29,6 +29,10 @@
     });
 
     Route::middleware('auth', 'verified')->group(function () {
+        Route::post('bookmark/fill', [
+            BookmarkController::class,
+            'fill'
+        ])->name('bookmark.fill');
         Route::Resource('bookmark', BookmarkController::class);
         Route::Resource('user-profile', UserProfileController::class)->only('store');
     });

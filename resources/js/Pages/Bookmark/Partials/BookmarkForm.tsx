@@ -1,18 +1,17 @@
 import React from "react";
 import {Autocomplete, Chip, FormControlLabel, Grid, Stack, Switch, TextField,} from "@mui/material";
-// @ts-ignore
-import {InertiaFormProps} from "@inertiajs/react/types/useForm";
 import _ from "lodash";
 import {usePage} from "@inertiajs/react";
 import {BookmarkFormFillButton} from "@/Pages/Bookmark/Partials/BookmarkFormFillButton";
 
 
 export const BookmarkForm: React.FC<{
-    errors?: InertiaFormProps['errors'];
-    setData: InertiaFormProps['setData'];
-    data: InertiaFormProps['data'];
+    errors?: any;
+    setData: any;
+    data: any;
 }> = (props) => {
     const tags = usePage().props.tags as any;
+    const groups = usePage().props.groups as any;
 
     return (
         <>
@@ -33,7 +32,7 @@ export const BookmarkForm: React.FC<{
                 <TextField
                     error={!_.isNil(props.errors.url)}
                     label="Url"
-                    defaultValue={props.data.url}
+                    value={props.data.url}
                     onChange={(e) =>
                         props.setData("url", e.target.value)
                     }
@@ -47,7 +46,7 @@ export const BookmarkForm: React.FC<{
                 <TextField
                     error={!_.isNil(props.errors.title)}
                     label="Title"
-                    defaultValue={props.data.title}
+                    value={props.data.title}
                     onChange={(e) =>
                         props.setData("title", e.target.value)
                     }
@@ -60,7 +59,7 @@ export const BookmarkForm: React.FC<{
                 <TextField
                     error={!_.isNil(props.errors.description)}
                     label="Description"
-                    defaultValue={props.data.description}
+                    value={props.data.description}
                     onChange={(e) =>
                         props.setData("description", e.target.value)
                     }
@@ -68,6 +67,29 @@ export const BookmarkForm: React.FC<{
                     fullWidth
                     multiline
                     rows={3}
+                />
+            </Grid>
+            <Grid xs={12} item>
+                <Autocomplete
+                    multiple
+                    value={props.data.groups}
+                    onChange={(event, newValue) => {
+                        props.setData("groups", newValue);
+                    }}
+                    options={groups}
+                    filterSelectedOptions
+                    freeSolo
+                    renderTags={(value: readonly string[], getTagProps) =>
+                        value.map((option: string, index: number) => (
+                            <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+                        ))
+                    }
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            label="Groups"
+                        />
+                    )}
                 />
             </Grid>
             <Grid xs={12} item>
