@@ -13,14 +13,12 @@
     {
         public function index(Request $request)
         {
-
-            $searchString = $request->get('search') ?? '';
             $filteredTags = $request->get('tags') ?? [];
 
             if (
                 $request->get('search')
             ) {
-
+                return BookmarkResource::collection(Bookmark::search($request->get('search'))->where('user_id', Auth::id())->get());
             }
 
             return BookmarkResource::collection($request->user()->bookmarks);

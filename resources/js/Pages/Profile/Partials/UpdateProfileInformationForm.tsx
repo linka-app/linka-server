@@ -1,6 +1,7 @@
 import {Link, useForm, usePage} from "@inertiajs/react";
 import React, {FormEventHandler} from "react";
 import {Alert, Button, Card, CardContent, CardHeader, Fade, Grid, TextField, Typography,} from "@mui/material";
+import _ from "lodash";
 
 export default function UpdateProfileInformation({
     mustVerifyEmail,
@@ -11,10 +12,15 @@ export default function UpdateProfileInformation({
     status?: string;
     className?: string;
 }) {
+    // @ts-ignore
     const profile = usePage().props.auth.profile;
+    // @ts-ignore
+    const user = usePage().props.auth.user;
 
     const { data, setData, patch, errors, processing, recentlySuccessful } =
         useForm({
+            name: profile?.name,
+            email: profile?.email,
             bookmark_date_display: profile?.bookmark_date_display,
             bookmark_link_target: profile?.bookmark_link_target,
             enable_sharing: profile?.enable_sharing,
@@ -43,7 +49,7 @@ export default function UpdateProfileInformation({
                     >
                         <Grid xs={12} item>
                             <TextField
-                                error={errors.name?.length > 0}
+                                error={!_.isNil(errors.name)}
                                 label="Name"
                                 defaultValue={data.name}
                                 onChange={(e) =>
@@ -56,7 +62,7 @@ export default function UpdateProfileInformation({
                         </Grid>
                         <Grid xs={12} item>
                             <TextField
-                                error={errors.email?.length > 0}
+                                error={!_.isNil(errors.email)}
                                 label="Email"
                                 defaultValue={data.email}
                                 onChange={(e) =>

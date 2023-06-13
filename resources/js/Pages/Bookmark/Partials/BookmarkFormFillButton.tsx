@@ -20,6 +20,7 @@ export const BookmarkFormFillButton: React.FC<{
 
     const doFill = async () => {
 
+        setLoading(true);
         const theResult = await window.axios.post(route("bookmark.fill"),{
             url: props.data.url
         }).then(res => {
@@ -33,6 +34,7 @@ export const BookmarkFormFillButton: React.FC<{
         }
 
         props.setData({ ...props.data, ...newData });
+        setLoading(false);
     };
 
     return (

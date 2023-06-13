@@ -6,7 +6,9 @@ import LinkaItemProps from './LinkaItemProps';
 import {usePage} from "@inertiajs/react";
 
 export const CondensedItem: React.FC<LinkaItemProps> = (props) => {
-  const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('md'));
+  // @ts-ignore
+    const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('md'));
+    // @ts-ignore
     const profile = usePage().props.auth.profile;
 
     console.log(props);
@@ -34,7 +36,9 @@ export const CondensedItem: React.FC<LinkaItemProps> = (props) => {
           },
         }}
         secondary={
+          // @ts-ignore
           props.item.tags &&
+            // @ts-ignore 
           props.item.tags.map((e, index) => (
             <Typography mr={1} variant="caption" key={index}>
               #{e}

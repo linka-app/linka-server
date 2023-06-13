@@ -37,7 +37,7 @@
         Route::Resource('user-profile', UserProfileController::class)->only('store');
     });
 
-    Route::get('/dashboard', [
+    Route::any('/dashboard', [
         LinkaController::class,
         'index'
     ])->middleware([

@@ -2,6 +2,7 @@
 
     namespace App\Models;
 
+    use App\Events\BookmarkSaved;
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Model;
     use Illuminate\Database\Query\Builder;
@@ -15,6 +16,11 @@
         use HasTags;
         use HasFactory;
 
+        protected $dispatchesEvents = [
+            'created' => BookmarkSaved::class,
+            'updated' => BookmarkSaved::class,
+        ];
+
         protected $fillable = [
             'url',
             'title',
@@ -23,6 +29,7 @@
             'archived',
             'shared',
             'user_id',
+            'web_archive_snapshot_url',
         ];
 
         protected $casts = [

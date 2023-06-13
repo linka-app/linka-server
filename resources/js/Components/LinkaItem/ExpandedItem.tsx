@@ -1,12 +1,13 @@
-import {shortenURL} from '@/Utils/shortenURL/shortenURL';
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 import {Grid, ListItemAvatar, ListItemButton, ListItemText, Typography, useMediaQuery,} from '@mui/material';
 import moment from 'moment';
 import React from 'react';
 import LinkaItemProps from './LinkaItemProps';
+import {shortenURL} from "@/Utils";
 
 export const ExpandedItem: React.FC<LinkaItemProps> = (props) => {
-  const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('md'));
+  // @ts-ignore
+    const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
   const theTime = moment(props.item.date_added).fromNow();
 
@@ -32,40 +33,40 @@ export const ExpandedItem: React.FC<LinkaItemProps> = (props) => {
         </ListItemAvatar>
       )}
       <Grid container spacing={0}>
-        <Grid item xs={11}>
-          <ListItemText
-            primary={props.item.title || shortenURL(props.item.url)}
-            primaryTypographyProps={{
-              sx: {
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              },
-            }}
-            secondary={
-              <>
-                {theTags}{' '}
-                {props.item.description && (
-                  <>
-                    <Typography variant="caption" mr={1}>
-                      |
-                    </Typography>
-                    <Typography variant="caption">
-                      {props.item.description}
-                    </Typography>
-                  </>
-                )}
-              </>
-            }
-            secondaryTypographyProps={{
-              sx: {
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              },
-            }}
-          />
-        </Grid>
+          <Grid item xs={11}>
+              <ListItemText
+                  primary={props.item.title || shortenURL(props.item.url)}
+                  primaryTypographyProps={{
+                      sx: {
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                      },
+                  }}
+                  secondary={
+                      <>
+                          {theTags}{' '}
+                          {props.item.description && (
+                              <>
+                                  <Typography variant="caption" mr={1}>
+                                      |
+                                  </Typography>
+                                  <Typography variant="caption">
+                                      {props.item.description}
+                                  </Typography>
+                              </>
+                          )}
+                      </>
+                  }
+                  secondaryTypographyProps={{
+                      sx: {
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                      },
+                  }}
+              />
+          </Grid>
         <Grid item xs={11}>
           <ListItemText
             disableTypography

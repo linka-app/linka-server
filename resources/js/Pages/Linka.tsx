@@ -1,11 +1,12 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import {Head} from "@inertiajs/react";
-import React, {Suspense, useState} from "react";
-import {Box, Grid, List, Stack, TextField} from "@mui/material";
+import {Head, router} from "@inertiajs/react";
+import React, {Suspense, useCallback, useEffect, useState} from "react";
+import {Box, Container, Grid, List, Stack, TextField} from "@mui/material";
 import {LinkaItem} from "@/Components/LinkaItem";
 import LinkaItemSkeleton from "@/Components/LinkaItem/LinkaItemSkeleton";
 import {i18n, I18nLocals} from "@/i18n";
 import {BookmarkItem} from "@/types";
+import _ from "lodash";
 
 interface PageProps {
     config: any;
@@ -23,12 +24,30 @@ export default function Linka({ config, auth, links }: PageProps) {
 
     const [searchTerm, setSearchTerm] = useState("");
 
+    const debounceLoadData = useCallback(_.debounce(fetchData, 300), []);
+
+    useEffect(() => {
+        debounceLoadData(searchTerm);
+    }, [searchTerm]);
+
+    function fetchData(searchTerm: string) {
+        router.visit(route("dashboard"),{
+            method: 'post',
+            data: {
+                search: searchTerm
+            },
+            only: ['links'],
+            preserveState: true,
+        });
+    }
+
+
     return (
         <AuthenticatedLayout>
             <Head title="Dashboard" />
 
-            <>
-                <Box sx={{ flexGrow: 1 }}>
+                <Box sx={{ flexGrow: 1 }} pt={3}>
+                    <Container fixed>
                     <Grid container spacing={2}>
                         <Grid xs={12}>
                             <Stack direction={"row"} spacing={1}>
@@ -66,8 +85,9 @@ export default function Linka({ config, auth, links }: PageProps) {
                             </List>
                         </Grid>
                     </Grid>
+                    </Container>
                 </Box>
-            </>
+
         </AuthenticatedLayout>
     );
 }

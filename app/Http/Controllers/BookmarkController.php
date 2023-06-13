@@ -110,19 +110,6 @@ oc'
         {
             $this->authorize('viewAny', Bookmark::class);
 
-//            Bookmark::search($searchString)
-//                //orderBy('created_at', 'desc')
-//                // ->filterByCurrentUser()
-//                //                                   ->filterByTags($filteredTags)
-//                //                                   ->paginate(20)
-//                //                                   ->withQueryString()
-//                //                                   ->through(fn(Bookmark $link) => [
-//                //                                       'title' => $link->title,
-//                //                                       'url'   => $link->url,
-//                //                                       PHP_URL_HOST,
-//                //                                       'id'    => $link->id,
-//                //                                   ])
-
             return Inertia::render('Linka', [
                 'links' => fn() => (new BookmarkService())->index($request),
                 'tags'  => TagController::getAllTags(),
@@ -158,8 +145,13 @@ oc'
             $bookmark['user_id'] = Auth::id();
             $bookmark->save();
 
-            $bookmark->syncTagsWithType($validated['tags'], 'tag');
-            $bookmark->syncTagsWithType($validated['groups'], 'group');
+            if (!empty($validated['tags'])) {
+                $bookmark->syncTagsWithType($validated['tags'], 'tag');
+            }
+
+            if (!empty($validated['groups'])) {
+                $bookmark->syncTagsWithType($validated['groups'], 'group');
+            }
 
             return to_route('dashboard');
         }

@@ -1,13 +1,8 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import GuestLayout from "@/Layouts/GuestLayout";
-import { Head, Link, useForm } from "@inertiajs/react";
-import {
-    CheckboxElement,
-    FormContainer,
-    PasswordElement,
-    TextFieldElement,
-} from "react-hook-form-mui";
-import { Button, Stack } from "@mui/material";
+import {Head, Link, useForm} from "@inertiajs/react";
+import {Button, FormControlLabel, Grid, Switch, TextField} from "@mui/material";
+import _ from "lodash";
 
 export default function Login({
     status,
@@ -44,44 +39,67 @@ export default function Login({
                 </div>
             )}
 
-            <FormContainer defaultValues={data} onSuccess={submit}>
-                <Stack spacing={2}>
-                    <TextFieldElement
-                        name="email"
-                        label="Email"
-                        autoComplete="username"
-                        required
-                        fullWidth
+            <Grid
+                container
+                spacing={2}
+                component="form"
+                onSubmit={submit}
+            >
+                <Grid xs={12} item>
+                    <TextField
+                        error={!_.isNil(errors.email)}
+                        label="Name"
+                        defaultValue={data.email}
+                        onChange={(e) =>
+                            setData("email", e.target.value)
+                        }
                         helperText={errors.email}
-                    />
-                    <PasswordElement
-                        name="password"
-                        label="Password"
-                        autoComplete="current-password"
-                        required
+                        autoComplete="name"
                         fullWidth
-                        helperText={errors.password}
                     />
-                    <CheckboxElement name="remember" label="Remember Me" />
-                    <Stack spacing={2} direction={"row"}>
-                        {canResetPassword && (
-                            <Link
-                                href={route("password.request")}
-                                className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                Forgot your password?
-                            </Link>
-                        )}
-                        <Button
-                            variant={"outlined"}
-                            type={"submit"}
-                            disabled={processing}
+
+                </Grid>
+                <Grid xs={12} item>
+                    <TextField
+                        error={!_.isNil(errors.password)}
+                        label="Password"
+                        defaultValue={data.password}
+                        onChange={(e) =>
+                            setData("password", e.target.value)
+                        }
+                        helperText={errors.password}
+                        autoComplete="current-password"
+                        type={"password"}
+                        fullWidth
+                    />
+
+                </Grid>
+                <Grid xs={12} item>
+                    <FormControlLabel control={<Switch
+                        // @ts-ignore
+                        defaultValue={data.remember} onChange={(e) =>
+                        setData("remember", e.target.value == 'on')
+                    } />} label="Remember Me" />
+                </Grid>
+                <Grid xs={6} item>
+                    {canResetPassword && (
+                        <Link
+                            href={route("password.request")}
                         >
-                            Log in
-                        </Button>
-                    </Stack>
-                </Stack>
-            </FormContainer>
+                            Forgot your password?
+                        </Link>
+                    )}
+                </Grid>
+                <Grid xs={6} item>
+                    <Button
+                        variant={"outlined"}
+                        type={"submit"}
+                        disabled={processing}
+                    >
+                        Log in
+                    </Button>
+                </Grid>
+            </Grid>
         </GuestLayout>
     );
 }

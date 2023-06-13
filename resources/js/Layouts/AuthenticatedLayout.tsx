@@ -7,6 +7,7 @@ import {
     Avatar,
     Box,
     Container,
+    CssBaseline,
     Divider,
     Drawer,
     Grid,
@@ -17,7 +18,7 @@ import {
     ListItemIcon,
     ListItemText,
     Stack,
-    Toolbar,
+    Toolbar
 } from "@mui/material";
 import LinkaLogo from "@/Images/logo192.png";
 import {Credits} from "@/Components/Credits";
@@ -55,6 +56,7 @@ const InnerComponent: React.FC<{
 
     return (
         <>
+            <CssBaseline />
             <Drawer
                 anchor={"left"}
                 open={isDrawer}
@@ -125,7 +127,7 @@ const InnerComponent: React.FC<{
             </AppBar>
             <Container fixed>
                 <Box mt={"75px"} mb={2}>
-                    <Grid container>{props.children}</Grid>
+                    <Grid container spacing={0}>{props.children}</Grid>
                     <Stack
                         mb={2}
                         direction="column"

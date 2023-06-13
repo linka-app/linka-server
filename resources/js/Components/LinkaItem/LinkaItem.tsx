@@ -9,6 +9,7 @@ import CondensedItem from "@/Components/LinkaItem/CondensedItem";
 import ExpandedItem from "@/Components/LinkaItem/ExpandedItem";
 
 export const LinkaItem: React.FC<LinkaItemProps> = (props) => {
+    // @ts-ignore
     const profile = usePage().props.auth.profile;
 
     if (!_.get(props, "item.url")) {

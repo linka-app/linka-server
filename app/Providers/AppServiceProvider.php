@@ -6,6 +6,8 @@
     use Illuminate\Http\Resources\Json\JsonResource;
     use Illuminate\Support\Facades\Auth;
     use Illuminate\Support\ServiceProvider;
+    use Illuminate\Support\Stringable;
+    use Str;
 
     class AppServiceProvider extends ServiceProvider
     {
@@ -27,5 +29,15 @@
             Builder::macro('filterByCurrentUser', function (string $userColumn = 'user_id') {
                 return $this->where($userColumn, Auth::id());
             });
+
+            // String helpers
+            Str::macro('urlHost', function (string $value) {
+                return @parse_url($value)['host'];
+            });
+
+            Stringable::macro('urlHost', function () {
+                return new Stringable(@parse_url($this->value)['host']);
+            });
+
         }
     }

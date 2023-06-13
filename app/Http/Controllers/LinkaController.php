@@ -13,8 +13,6 @@
     {
         public function index(Request $request, array $filteredTags = [])
         {
-            $this->authorize('viewAny', Bookmark::class);
-
 //            Bookmark::search($searchString)
 //                //orderBy('created_at', 'desc')
 //                // ->filterByCurrentUser()

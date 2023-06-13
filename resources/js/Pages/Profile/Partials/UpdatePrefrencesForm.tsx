@@ -19,6 +19,7 @@ import {
 import _ from "lodash";
 
 export default function UpdatePrefrencesForm() {
+    // @ts-ignore
     const profile = usePage().props.auth.profile as any;
 
     const { data, setData, post, errors, processing, recentlySuccessful } =
